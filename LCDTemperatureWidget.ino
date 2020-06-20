@@ -12,27 +12,27 @@ TFT TFTscreen = TFT(cs, dc, rst);
 // char array to print percentage to screen
 char valArray[4];
 
-class RGB
+class RGBval
 {
   public:
-  int r = 0;
-  int g = 0;
-  int b = 0;
-  RGB();
-  RGB(int r, int g, int b) {
-    this->r = r;
-    this->g = g;
-    this->b = b;
-  }
+    int r = 0;
+    int g = 0;
+    int b = 0;
+    RGBval(){};
+    RGBval(int r, int g, int b) {
+      this->r = r;
+      this->g = g;
+      this->b = b;
+    }
 };
 
 class Rectangle
 {
   public:
     int x,y,l,w;
-    RGB rgb;
+    RGBval rgb;
     Rectangle();
-    Rectangle(int x, int y, int l, int w, RGB rgb) {
+    Rectangle(int x, int y, int l, int w, RGBval rgb) {
       this->x = x;
       this->y = y;
       this->l = l;
@@ -70,7 +70,7 @@ int percentage = 0;
 
 
 
-int drawRectangle(Rectangle rect, RGB rgb)
+int drawRectangle(Rectangle rect, RGBval rgb)
 {
   TFTscreen.noStroke();
   TFTscreen.fill(rgb.b, rgb.g, rgb.r); // set fill color
@@ -104,7 +104,7 @@ void drawBar(double percent, Rectangle::Rectangle outter, Rectangle::Rectangle i
 }
 */
 
-void drawPercent(double percentVal, RGB rgb)
+void drawPercent(double percentVal, RGBval rgb)
 {
   String percentString = String((int)percentVal) + "%";
   percentString.toCharArray(valArray, 4);
@@ -122,7 +122,7 @@ void loop()
   // Rectangle innerCPU;
   // Rectangle outterGPU;
   // Rectangle innerGPU;
-  RGB outterCPURGB(190,190,190);
+  RGBval outterCPURGB(190,190,190);
   
   Rectangle outterCPU(60,5,95,25, outterCPURGB);
 
