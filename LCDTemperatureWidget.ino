@@ -78,31 +78,32 @@ int drawRectangle(Rectangle rect, RGBval rgb)
   return 1;
 }
 
-/*
-void drawBar(double percent, Rectangle::Rectangle outter, Rectangle::Rectangle inner)
+
+void drawBar(double percent, Rectangle outer, Rectangle inner)
 {
 
-  // draw outter rectangle
+  // draw outer rectangle
+  drawRectangle(outer, outer.rgb);
+
   // check percent for color?
   
   // Inner rectangle
   if (percent > 0 && percent <= 33) {
-    TFTscreen.fill(30,230,30); // set fill color
+    inner.set_rgb(30,230,30); // green 
   }
   else if (percent >33 && percent <=66) {
-    TFTscreen.fill(0,255,255); // set fill color
+    inner.set_rgb(255,255,0); // yellow
   }
   else if (percent >66 && percent <=100) {
-    TFTscreen.fill(0,0,255); // set fill color
+    inner.set_rgb(255,0,0); // red
   }
   else {
     //TODO error over 100%
   }
-  TFTscreen.rect(63,8,a,w-6);
+  drawRectangle(inner,inner.rgb);
   
   // draw inner w/ percent change
 }
-*/
 
 void drawPercent(double percentVal, RGBval rgb)
 {
@@ -119,18 +120,24 @@ void drawPercent(double percentVal, RGBval rgb)
 
 void loop()
 {
-  // Rectangle innerCPU;
-  // Rectangle outterGPU;
-  // Rectangle innerGPU;
-  RGBval outterCPURGB(190,190,190);
+  RGBval outerCPURGB(190,190,190);
+  RGBval innerCPURGB(0,240,0);
+  RGBval outerGPURGB(190,190,190);
+  RGBval innerGPURGB(0,240,0);
   
-  Rectangle outterCPU(60,5,95,25, outterCPURGB);
-
-
-  drawRectangle(outterCPU,outterCPURGB);
+  Rectangle outerCPU(60,10, TFTscreen.width() - 70,35, outerCPURGB);
+  Rectangle innerCPU(63,13, TFTscreen.width() - 76,29, outerCPURGB);
+  Rectangle outerGPU(60,65, TFTscreen.width() - 70,35, outerCPURGB);
+  Rectangle innerGPU(63,68, TFTscreen.width() - 76,29, outerCPURGB);
+  // draw top bar
+  drawBar(40, outerCPU, innerCPU);
+  // draw bot bar
+  drawBar(70, outerGPU, innerGPU);
+  // drawRectangle(outerGPU,outerGPURGB);
+  // drawRectangle(innerGPU,innerGPURGB);
 
   // wait for a moment
-  delay(500);
+  delay(2000);
   TFTscreen.fill(0, 0, 0); // set fill color
   TFTscreen.noStroke();
   TFTscreen.rect(0, 0, 59, 40);
